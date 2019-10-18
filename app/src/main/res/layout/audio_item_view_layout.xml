@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/audio_itemview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E3F3FF">
+
+
+        <ImageView
+            android:id="@+id/audioItem_imageview"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/audioName_textiew"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/audioName_textiew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Audio Name"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_blue"
+            app:layout_constraintBottom_toTopOf="@+id/audioType_textiew"
+            app:layout_constraintEnd_toStartOf="@+id/checkItem_imageview"
+            app:layout_constraintStart_toEndOf="@+id/audioItem_imageview"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textAlignment="textStart"
+            />
+
+        <TextView
+            android:id="@+id/audioType_textiew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Audio Type"
+            android:textSize="18sp"
+            android:layout_marginLeft="32dp"
+            android:textColor="@color/color_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/checkItem_imageview"
+            app:layout_constraintStart_toEndOf="@+id/audioItem_imageview"
+            app:layout_constraintTop_toBottomOf="@+id/audioName_textiew"
+            android:textAlignment="textStart"
+            />
+
+        <ImageView
+            android:id="@+id/checkItem_imageview"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_check"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/audioType_textiew"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
