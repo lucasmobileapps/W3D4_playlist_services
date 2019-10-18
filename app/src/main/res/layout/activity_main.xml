@@ -96,6 +96,7 @@
         android:id="@+id/audioSelected_imageview"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:clickable="true"
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="@dimen/dimen_16dp"

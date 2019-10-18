@@ -17,7 +17,7 @@ import com.example.My_Playlist.model.Audiotracks
 class AudioAdapter(private val audioadapterDelegate: AudioAdapterDelegate)
     : ListAdapter<Audiotracks, AudioAdapter.AudioViewHolder>(AudioDiffUtil()){
     interface  AudioAdapterDelegate{
-        fun audioSelect(person: Audiotracks)
+        fun audioSelect(audio: Audiotracks)
     }
 
     override fun onCreateViewHolder(

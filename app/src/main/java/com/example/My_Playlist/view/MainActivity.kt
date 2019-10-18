@@ -19,13 +19,13 @@ class MainActivity : AppCompatActivity(), AudioAdapter.AudioAdapterDelegate {
 
 
     var audioList: MutableList <Audiotracks> = mutableListOf(
-        Audiotracks("", "Relaxing", "60 cm"),
-        Audiotracks("Labrador", "Yoga", "60 cm"),
-        Audiotracks("Labrador", "Workout", "60 cm"),
-        Audiotracks("Labrador", "Running", "60 cm"),
-        Audiotracks("Labrador", "Meditation", "60 cm"),
-        Audiotracks("Labrador", "Studying", "60 cm"),
-        Audiotracks("Labrador", "Motivation", "60 cm")
+        Audiotracks("Track1", "Relaxing", "60 cm"),
+        Audiotracks("Track2", "Yoga", "60 cm"),
+        Audiotracks("Track3", "Workout", "60 cm"),
+        Audiotracks("Track4", "Running", "60 cm"),
+        Audiotracks("Track5", "Meditation", "60 cm"),
+        Audiotracks("Track6", "Studying", "60 cm"),
+        Audiotracks("Track7", "Motivation", "60 cm")
         )
 
 
@@ -55,8 +55,13 @@ class MainActivity : AppCompatActivity(), AudioAdapter.AudioAdapterDelegate {
         }
     }
 
-    override fun audioSelect(person: Audiotracks) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun audioSelect(audio: Audiotracks) {
+        audioSelected_textview.text = audio.name
+        myPlayerService?.playTracks(R.raw.relax)?: {
+            Log.d("TAG_X", "Service started from selection")
+            bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        }()
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +76,7 @@ class MainActivity : AppCompatActivity(), AudioAdapter.AudioAdapterDelegate {
         val intent = Intent(this, MyPlayerService::class.java)
         play_button.setOnClickListener {
             myPlayerService?.playPlayer() ?: {
-                Log.d("TAG_X", "Service started")
+                Log.d("TAG_X", "Service started from play button")
                 bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
             }()
         }
@@ -86,8 +91,13 @@ class MainActivity : AppCompatActivity(), AudioAdapter.AudioAdapterDelegate {
                 //stopService(intent)
             }
         }
+        audioSelected_imageview.setOnClickListener {
+            myPlayerService?.playTracks(R.raw.relax)?: {
+                Log.d("TAG_X", "Service started from play button")
+                bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+            }()
+        }
     }
-
     override fun onResume() {
         super.onResume()
         (audio_recyclerview.adapter as AudioAdapter?)?.submitList(audioList)

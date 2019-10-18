@@ -16,8 +16,10 @@ class MyPlayerService : Service(){
     lateinit var mediaPlayer: MediaPlayer
     private val myBinder = MyPlayerBinder()
     lateinit var notificationManager: NotificationManager
+    var  audioPlaying : Int = R.raw.keyboard
 
     override fun onBind(intent: Intent): IBinder {
+
         playPlayer()
         return myBinder
     }
@@ -54,18 +56,42 @@ class MyPlayerService : Service(){
 
     override fun onCreate() {
         super.onCreate()
-        notificationManager =
-            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        mediaPlayer = MediaPlayer.create(this, audioPlaying)
+        mediaPlayer.isLooping = false
+        mediaPlayer.start()
+
 
         notificationManager.notify(1, createNotification())
-        mediaPlayer = MediaPlayer.create(this, R.raw.keyboard)
-        mediaPlayer.isLooping = false
+
     }
+
+    fun playTracks(track : Int){
+       // if (track != audioPlaying)
+        mediaPlayer.stop()
+        mediaPlayer.reset()
+        audioPlaying = track
+
+
+
+    }
+
+    fun playPlayer() {
+        if (!mediaPlayer.isPlaying) {
+            mediaPlayer = MediaPlayer.create(this, audioPlaying)
+            mediaPlayer.isLooping = false
+            mediaPlayer.start()
+            sendBroadcast(Intent("com.my.sender").apply {
+                this.putExtra("my_key", "PLAYING")
+            })
+        }
+    }
+
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        mediaPlayer.start()
-        playPlayer()
+        playTracks(audioPlaying)
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -79,7 +105,7 @@ class MyPlayerService : Service(){
 
     fun pausePlayer() {
         if (mediaPlayer.isPlaying) {
-            mediaPlayer.pause()
+            mediaPlayer.reset()
             sendBroadcast(Intent("com.my.sender").apply {
                 this.putExtra("my_key", "PAUSED")
             })
@@ -88,14 +114,6 @@ class MyPlayerService : Service(){
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
-    }
-    fun playPlayer() {
-        if (!mediaPlayer.isPlaying) {
-            mediaPlayer.start()
-            sendBroadcast(Intent("com.my.sender").apply {
-                this.putExtra("my_key", "PLAYING")
-            })
-        }
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
